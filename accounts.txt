@@ -1,2 +1,4 @@
 Name/games/wins/winsInARow/credits/lastResult
 Vlad 0 0 0 100 false
+Huy 0 0 0 100 false
+Олег 0 0 0 100 false

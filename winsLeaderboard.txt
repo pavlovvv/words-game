@@ -1,0 +1,11 @@
+Name/games/wins/winsInARow
+User1 10 10 10
+User2 9 9 9
+User3 8 8 8
+User4 7 7 7
+User5 6 6 6
+User6 5 5 5
+User7 4 4 4
+User8 3 3 3
+User9 2 2 2
+User10 1 1 1
