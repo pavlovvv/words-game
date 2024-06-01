@@ -124,18 +124,6 @@ public:
         return false;
     }
 
-    /*void createAccount (string n) {
-        ofstream fout("accounts.txt", ios::app);
-        fout << n << " 0 0 0 100 false" << endl;
-        setName(n);
-        setGamesCount(0);
-        setWinsInARow(0);
-        setWins(0);
-        setCredits(100);
-        setLastResult(false);
-        fout.close();
-    }*/
-
     void enterAsGuest () {
         setGamesCount(0);
         setWinsInARow(0);
@@ -143,12 +131,4 @@ public:
         setCredits(100);
         setLastResult(false);
     }
-
-//    string toLower(const string &str) {
-//        string lowerStr = str;
-//        for (char &c : lowerStr) {
-//            c = tolower(static_cast<unsigned char>(c));
-//        }
-//        return lowerStr;
-//    }
 };

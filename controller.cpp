@@ -4,31 +4,15 @@
 #include "difficulty_enum.h"
 #include "mode_enum.h"
 #include "wordsgame.h"
-#include "wordsClassic.h"
-#include "wordsSentence.h"
-#include "wordsHidden.h"
+#include "API.h"
+#include "controller.h"
 
 using namespace std;
 
-class Controller {
-private:
-    View view;
-    Mode mode;
-    Difficulty difficulty;
-    Account account;
-public:
-
-    void run() {
-        view.accountInteraction(account);
-        while(true){
-            account.getData(account.getName());
-            view.menuInteraction(account);
-            startGame();
-        }
-    }
-
-
-    void startGame() {
+void Controller:: startGame() {
+        while (true) {
+        Mode mode;
+        Difficulty difficulty;
         while (true) {
             cout << "\nВиберіть режим (classic/hidden/proverb/sentence/hangman)" << endl;
             cout << "Classic - класичний варіант гри в \"Слова\"" << endl;
@@ -60,66 +44,18 @@ public:
                 cout << "Некоректна складність. Спробуйте ще раз." << endl;
             }
         }
+
         cout << "Вибраний режим: " << mode << endl;
         cout << "Вибрана складність: " << difficulty << endl;
 
-        if(mode==Classic){
-            WordsClassic wordsClassic(account, mode, difficulty, "input.txt");
-            wordsClassic.runWordsClassic();
-        }else if(mode==Sentence){
-            WordsSentence wordsSentence(account, mode, difficulty, "input.txt");
-            wordsSentence.runWordsSentence();
-        }else if(mode==Hidden){
-            WordsHidden wordsHidden(account, mode, difficulty, "input.txt");
-            wordsHidden.runWordsHidden();
-        }else if(mode==Proverb){
 
-        }else if(mode==Hangman){
+        WordsGame wordsGame(mode, difficulty, "input.txt");
 
-        }
-
-        /*API api;
+        API api;
         string words = api.apiRequest("Ми граємо в слова українською мовою. Дай мені рандомних 30 іменників через пробіл, без коми, нічого крім цього не пиши. Слова повинні бути не більше за 10 символів. Уникай повторень. Кожне слово повинно починатись з великої літери");
         ofstream fout("input.txt");
         fout << words << endl;
         wordsGame.runGame();
-        string currentWord = wordsGame.getWord();
-        int attempts = wordsGame.getAttempts();
-        string hint = "-";
-        again:
-        int credits = view.getAccountCredits();
-        view.printCurrentAttemptTable(wordsGame.getShuffledWord(), attempts, hint, credits);
-
-        string inputword;
-        cout << "Введи слово, або \"підказка\": ";
-        getline(cin, inputword, ' ');
-        if (inputword == "підказка") {
-            if (credits >= 25) {
-                hint = api.apiRequest("Ми граємо в слова. Зроби підказку українськую мовою до 40 символів до слова " + currentWord);
-                view.setAccountCredits(credits-25);
-            }
-            else {
-                cout << "⚠\uFE0F⚠\uFE0F⚠\uFE0FНа жаль, у вас недостатньо кредитів. Купити їх можна, задонативши на карту 5355571113731129. Після донату пишете в ТГ за номером 0508641813, кидаєте скрін оплати. 100 кредитів = 100грн. Після підтвердження оплати кредити будуть додані на акаунт. Колись.😘😘😘😆😆😆:-):-)^_^(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(╯°□°）╯︵ ┻━┻(╯°□°）╯︵ ┻━┻(╯°□°）╯︵ ┻━┻⚠\uFE0F⚠\uFE0F⚠\uFE0F" << endl;
-            }
-            goto again;
         }
-        if (inputword == currentWord) {
-            cout << "Ви вгадали!!!!" << endl;
-            if(difficulty == Easy){
-                view.setAccountCredits(credits+5);
-            }else if(difficulty == Medium){
-                view.setAccountCredits(credits+15);
-            }else view.setAccountCredits(credits+25);
+}
 
-        } else {
-            if (attempts == 1) {
-                cout << "Ви програли! Лошара" << endl;
-            }
-            else {
-                cout << "Ви не вгадали. Спробуйте ще раз." << endl;
-                attempts--;
-                goto again;
-            }
-        }*/
-    }
-};

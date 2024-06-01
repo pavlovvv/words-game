@@ -2,18 +2,17 @@
 #include <string>
 #include <vector>
 #include <fstream>
-#include "api.h"
 #include <random>
 #include <algorithm>
 
 using namespace std;
 
-class WordsClassic: public WordsGame {
+class WordsHidden : public WordsGame {
 
 public:
-    WordsClassic(Account &a, Mode m, Difficulty d, string fn) : WordsGame(a, m, d, fn) {}
+    WordsHidden(Account &a, Mode m, Difficulty d, string fn) : WordsGame(a, m, d, fn) {}
 
-    void runWordsClassic(){
+    void runWordsHidden() {
         API api;
         int count = 2;
         string words = api.apiRequest("Ми граємо в слова українською мовою. Дай мені рандомних 15 рандомних іменників через пробіл, без коми, нічого крім цього не пиши. Слова повинні бути не більше за 10 символів. Уникай повторень. Кожне слово повинно починатись з великої літери");
@@ -91,15 +90,43 @@ public:
         return utf8Chars;
     }
 
+
     string shuffleUTF8Word(const string &str) {
         vector<string> utf8Chars = splitUTF8String(str);
         random_device rd;
         mt19937 g(rd());
         shuffle(utf8Chars.begin(), utf8Chars.end(), g);
         string shuffledStr;
-        for (const auto &ch: utf8Chars) {
+        int size = utf8Chars.size();
+        double k = size / 4.0;
+        vector<int> changedIndexes;
+        if(k>0 && k<=1){
+            changeRandomChar(utf8Chars, changedIndexes, g, 1);
+        }else if(k>1 && k<=2){
+            changeRandomChar(utf8Chars, changedIndexes, g, 2);
+        }else if(k>2 && k<=3){
+            changeRandomChar(utf8Chars, changedIndexes, g, 3);
+        }else if(k>3 && k<=4){
+            changeRandomChar(utf8Chars, changedIndexes, g, 4);
+        }else if(k>4 && k<=5){
+            changeRandomChar(utf8Chars, changedIndexes, g, 5);
+        }
+        for (const auto &ch : utf8Chars) {
             shuffledStr += ch;
         }
         return shuffledStr;
     }
+
+    void changeRandomChar(vector<string> &utf8Chars, vector<int> &changedIndices, mt19937 &g, int n) {
+        for(int i=0; i<n; i++){
+            uniform_int_distribution<> dis(0, utf8Chars.size() - 1);
+            int index;
+            do {
+                index = dis(g);
+            } while (find(changedIndices.begin(), changedIndices.end(), index) != changedIndices.end());
+            utf8Chars[index] = "*";
+            changedIndices.push_back(index);
+        }
+    }
 };
+
