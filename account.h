@@ -1,3 +1,6 @@
+#ifndef CURSOVA_ACCOUNT_H
+#define CURSOVA_ACCOUNT_H
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -12,124 +15,25 @@ private:
     int winsInARow;
     int credits;
     bool lastResult;
+
 public:
-    string getName() {
-        return name;
-    }
-
-    void setName(string n) {
-        name = n;
-    }
-
-    int getGamesCount() {
-        return games;
-    }
-
-    void setGamesCount(int g) {
-        games = g;
-    }
-
-    void addGame() {
-        games++;
-    }
-
-    int getWinsInARow() {
-        return winsInARow;
-    }
-
-    void setWins(int w) {
-        wins = w;
-    }
-
-    int getWins() {
-        return wins;
-    }
-
-    void setWinsInARow(int wiar) {
-        winsInARow = wiar;
-    }
-
-    int getCredits() {
-        return credits;
-    }
-
-    void setCredits(int c) {
-        credits = c;
-    }
-
-    bool getLastResult() {
-        return lastResult;
-    }
-
-    void setLastResult(bool result) {
-        lastResult = result;
-    }
-
-    bool endGame(bool result, int c) {
-        fstream file("accounts.txt");
-        if (!file) {
-            cout << "Cannot open input file" << endl;
-            return false;
-        }
-        string nameFromFile;
-        while (file >> nameFromFile) {
-            if (name == nameFromFile) {
-                file << " " << games + 1 << " " << (result ? wins + 1 : wins) << " " << (result ? winsInARow + 1 : 0)
-                     << " " << c << " " << (result ? "true" : "false") << endl;
-                setGamesCount(games + 1);
-                setWins(result ? wins + 1 : wins);
-                setWinsInARow(result ? winsInARow + 1 : 0);
-                setCredits(c);
-                setLastResult(result);
-                file.close();
-                return true;
-            }
-        }
-        file.close();
-        return false;
-    }
-
-    void createAccount(string n) {
-        ofstream fout("accounts.txt", ios::app);
-        fout << n << " 0 0 0 100 false" << endl;
-        setName(n);
-        setGamesCount(0);
-        setWinsInARow(0);
-        setWins(0);
-        setCredits(100);
-        setLastResult(false);
-        fout.close();
-    }
-
-    bool getData(string n) {
-        ifstream fin("accounts.txt");
-        if (!fin) {
-            cout << "Cannot open input file" << endl;
-            return false;
-        }
-        string nameFromFile;
-        while (fin >> nameFromFile) {
-            if (n == nameFromFile) {
-                fin >> games >> wins >> winsInARow >> credits >> lastResult;
-                setName(n);
-                setGamesCount(games);
-                setWins(wins);
-                setWinsInARow(winsInARow);
-                setCredits(credits);
-                setLastResult(lastResult);
-                fin.close();
-                return true;
-            }
-        }
-        fin.close();
-        return false;
-    }
-
-    void enterAsGuest() {
-        setGamesCount(0);
-        setWinsInARow(0);
-        setWins(0);
-        setCredits(100);
-        setLastResult(false);
-    }
+    string getName();
+    void setName(string n);
+    int getGamesCount();
+    void setGamesCount(int g);
+    void addGame();
+    int getWinsInARow();
+    void setWins(int w);
+    int getWins();
+    void setWinsInARow(int wiar);
+    int getCredits();
+    void setCredits(int c);
+    bool getLastResult();
+    void setLastResult(bool result);
+    bool endGame(bool result, int c);
+    void createAccount(string n);
+    bool getData(string n);
+    void enterAsGuest();
 };
+
+#endif // CURSOVA_ACCOUNT_H

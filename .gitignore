@@ -1,1 +1,4 @@
 /cmake-build-debug
+/main.exe
+/CMakeLists.txt
+/config.json

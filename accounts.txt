@@ -1,4 +1,4 @@
 Name/games/wins/winsInARow/credits/lastResult
-Vlad 0 0 0 100 false
-Huy 0 0 0 100 false
-Олег 0 0 0 100 false
+Vlad 1053 188 17 355 true
+Admin 103 103 103 90 true
+New 8 8 8 115 true

@@ -1,66 +1,38 @@
+#ifndef WORDSGAME_H
+#define WORDSGAME_H
+
 #include <iostream>
 #include <string>
 #include <vector>
+#include <fstream>
+#include "account.h"
+#include "view.h"
+#include "difficulty_enum.h"
 
 using namespace std;
 
 class WordsGame {
 protected:
     string filename;
-    Account account;
-    Mode mode;
+    Account &account;
     Difficulty difficulty;
     int count;
-    View view;
     int attempts;
+    View view;
     string currentWord;
     string shuffledWord;
 public:
-    WordsGame(Account &a, Mode m, Difficulty d, string fn) : account(a), filename(fn), mode(m), difficulty(d),
-                                                             count(1) {}
+    WordsGame(Account &a, Difficulty d, string fn);
 
-    void addCount() {
-        count++;
-    }
+    void addCount();
 
-    int getAttempts() {
-        return attempts;
-    }
+    int getAttempts();
 
-    void setWord() {
-        ifstream fin("input.txt");
+    void setWord();
 
-        if (!fin.is_open()) {
-            cerr << "Помилка: не вдалося відкрити файл зі словами." << endl;
-            exit(1);
-        }
+    void runGame();
 
-        vector<string> words;
-        string word;
-        int c = 0;
-        while (fin >> word) {
-            words.push_back(word);
-            if (c == count) {
-                currentWord = word;
-            }
-            c++;
-        }
-        fin.close();
-    }
-
-    void runGame() {
-        setWord();
-        addCount();
-        attempts = 15;
-        switch (difficulty) {
-            case Easy:
-                break;
-            case Medium:
-                attempts = attempts / 1.5;
-                break;
-            case Hard:
-                attempts = attempts / 3;
-                break;
-        }
-    }
+    void winGame();
 };
+
+#endif // WORDSGAME_H

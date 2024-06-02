@@ -4,6 +4,16 @@ project(cursova)
 set(CMAKE_CXX_STANDARD 17)
 
 add_executable(cursova main.cpp
+        API.cpp
+        account.cpp
+        leaderboard.cpp
+        view.cpp
+        wordsgame.cpp
+        wordsClassic.cpp
+        wordsSentence.cpp
+        wordsHidden.cpp
+        mode_enum.cpp
+        difficulty_enum.cpp
 )
 
 find_package(CURL REQUIRED)
