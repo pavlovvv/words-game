@@ -44,7 +44,8 @@ public:
         while (true) {
             int choice;
             back:
-            cout << "\nОберіть дію: \n1 - Продивитись поточну статистику акаунта\n2 - Переглянути лідерборд \n3 - Почати гру \n4 - Вихід з програми\n";
+            cout
+                    << "\nОберіть дію: \n1 - Продивитись поточну статистику акаунта\n2 - Переглянути лідерборд \n3 - Почати гру \n4 - Вихід з програми\n";
             cin >> choice;
             switch (choice) {
                 case 1:
@@ -53,9 +54,10 @@ public:
                     break;
                 case 2:
                     cout << "Лідерборд: " << endl;
-                    while(true) {
+                    while (true) {
                         int choice1;
-                        cout << "\nОберіть лідерборд: \n1 - За іграми\n2 - За перемогами\n3 - За перемогами підряд\n4 - Повернутися\n";
+                        cout
+                                << "\nОберіть лідерборд: \n1 - За іграми\n2 - За перемогами\n3 - За перемогами підряд\n4 - Повернутися\n";
                         cin >> choice1;
                         switch (choice1) {
                             case 1:
@@ -79,7 +81,7 @@ public:
                     cout << "Початок гри: " << endl;
                     return;
                 case 4:
-                    cout << "До побачення! "<< endl;
+                    cout << "До побачення! " << endl;
                     exit(0);
                 default:
                     cout << "Такого варіанту не існує. Оберіть із списку вище." << endl;
@@ -88,7 +90,7 @@ public:
         }
     }
 
-    void printAccountData(Account &account)  {
+    void printAccountData(Account &account) {
         cout << "┌──────────────────┬───────────┬──────────────────┬─────────────┐" << endl;
         cout << "│ " << setw(20) << left << "  Ігор зіграно  "
              << " │ " << setw(8) << " Перемог "
@@ -103,23 +105,31 @@ public:
     }
 
     void printCurrentAttemptTable(string shuffledWord, int attempts, string hint, int credits) {
-        cout << "┌──────────────────────────────────────┬──────────────────────────────────────────────────────────────┬────────────────────┬───────────────────────┐" << endl;
-        cout << "│           Перемішане слово           │                           Підказка                           │  Спроб залишилось  │  Кредитів залишилось  │" << endl;
-        cout << "├──────────────────────────────────────┼──────────────────────────────────────────────────────────────┼────────────────────┼───────────────────────┤" << endl;
+        cout
+                << "┌──────────────────────────────────────┬──────────────────────────────────────────────────────────────┬────────────────────┬───────────────────────┐"
+                << endl;
+        cout
+                << "│           Перемішане слово           │                           Підказка                           │  Спроб залишилось  │  Кредитів залишилось  │"
+                << endl;
+        cout
+                << "├──────────────────────────────────────┼──────────────────────────────────────────────────────────────┼────────────────────┼───────────────────────┤"
+                << endl;
         cout << "│ " << shuffledWord;
-        printSpaces(37-countUTF8Characters(shuffledWord));
+        printSpaces(37 - countUTF8Characters(shuffledWord));
         cout << "│ " << hint;
-        printSpaces(61-countUTF8Characters(hint));
+        printSpaces(61 - countUTF8Characters(hint));
         cout << "│ " << attempts;
-        printSpaces(19- countIntCharacters(attempts));
+        printSpaces(19 - countIntCharacters(attempts));
         cout << "│ " << credits;
-        printSpaces(22- countIntCharacters(credits));
+        printSpaces(22 - countIntCharacters(credits));
         cout << "│" << endl;
-        cout << "└──────────────────────────────────────┴──────────────────────────────────────────────────────────────┴────────────────────┴───────────────────────┘" << endl;
+        cout
+                << "└──────────────────────────────────────┴──────────────────────────────────────────────────────────────┴────────────────────┴───────────────────────┘"
+                << endl;
     }
 
-    void printSpaces(int n){
-        for(int i=0; i<n; i++){
+    void printSpaces(int n) {
+        for (int i = 0; i < n; i++) {
             cout << ' ';
         }
     }
@@ -141,13 +151,13 @@ public:
         return count;
     }
 
-    int countIntCharacters(int a){
+    int countIntCharacters(int a) {
         int count = 0;
-        if(a==0){
+        if (a == 0) {
             return 1;
         }
-        while(a>0){
-            a/=10;
+        while (a > 0) {
+            a /= 10;
             count++;
         }
         return count;

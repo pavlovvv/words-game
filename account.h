@@ -37,7 +37,7 @@ public:
         return winsInARow;
     }
 
-    void setWins (int w) {
+    void setWins(int w) {
         wins = w;
     }
 
@@ -45,7 +45,7 @@ public:
         return wins;
     }
 
-    void setWinsInARow (int wiar) {
+    void setWinsInARow(int wiar) {
         winsInARow = wiar;
     }
 
@@ -53,7 +53,7 @@ public:
         return credits;
     }
 
-    void setCredits (int c) {
+    void setCredits(int c) {
         credits = c;
     }
 
@@ -74,7 +74,8 @@ public:
         string nameFromFile;
         while (file >> nameFromFile) {
             if (name == nameFromFile) {
-                file << " " << games + 1 << " " << (result ? wins + 1 : wins) << " " << (result ? winsInARow + 1 : 0) << " " << c << " " << (result ? "true" : "false") << endl;
+                file << " " << games + 1 << " " << (result ? wins + 1 : wins) << " " << (result ? winsInARow + 1 : 0)
+                     << " " << c << " " << (result ? "true" : "false") << endl;
                 setGamesCount(games + 1);
                 setWins(result ? wins + 1 : wins);
                 setWinsInARow(result ? winsInARow + 1 : 0);
@@ -88,7 +89,7 @@ public:
         return false;
     }
 
-    void createAccount (string n) {
+    void createAccount(string n) {
         ofstream fout("accounts.txt", ios::app);
         fout << n << " 0 0 0 100 false" << endl;
         setName(n);
@@ -124,7 +125,7 @@ public:
         return false;
     }
 
-    void enterAsGuest () {
+    void enterAsGuest() {
         setGamesCount(0);
         setWinsInARow(0);
         setWins(0);

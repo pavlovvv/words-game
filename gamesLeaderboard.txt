@@ -1,4 +1,3 @@
-Name/games/wins/winsInARow
 User1 10 10 10
 User2 9 9 9
 User3 8 8 8

@@ -20,22 +20,27 @@ public:
 
     void run() {
         view.accountInteraction(account);
-        while(true){
+        while (true) {
             account.getData(account.getName());
             view.menuInteraction(account);
             startGame();
         }
     }
 
-
     void startGame() {
         while (true) {
             cout << "\nВиберіть режим (classic/hidden/proverb/sentence/hangman)" << endl;
             cout << "Classic - класичний варіант гри в \"Слова\"" << endl;
-            cout << "Hidden - режим, де частина букв замінені на '*'. Цей режим підходить тим, хто вже трохи пограв у класичний режим" << endl;
+            cout
+                    << "Hidden - режим, де частина букв замінені на '*'. Цей режим підходить тим, хто вже трохи пограв у класичний режим"
+                    << endl;
             cout << "Proverb - режим для тих, хто вважає, що він добре знає прислів'я і приказки." << endl;
-            cout << "Sentence - режим для тих, кому гра з одним словом здається нудною. Відгадуйте одразу декілька слів." << endl;
-            cout << "Hangman - стара класична гра, де ви вгадуєте які літери є в слові і вгадуєте саме слово, доки шибениця не буде домальована до кінця." << endl;
+            cout
+                    << "Sentence - режим для тих, кому гра з одним словом здається нудною. Відгадуйте одразу декілька слів."
+                    << endl;
+            cout
+                    << "Hangman - стара класична гра, де ви вгадуєте які літери є в слові і вгадуєте саме слово, доки шибениця не буде домальована до кінця."
+                    << endl;
             cin >> mode;
 
             if (!cin.fail()) {
@@ -48,9 +53,9 @@ public:
 
         while (true) {
             cout << "\nВиберіть складність (easy/medium/hard)" << endl;
-            cout << "Easy - це складність, де у вас є необмежений час. Підходить початківцям." << endl;
-            cout << "Medium - складність, де у вас обмежений час (залежить від режиму). Більше підходить для тих, хто вже трохи пограв." << endl;
-            cout << "Hard - максимальна складність. В неї важко буде грати навіть досвідченим гравцям. Часу дуже мало, а слів менше не стало." << endl;
+            cout << "Easy - це складність, де у вас є 15 спроб. Підходить початківцям." << endl;
+            cout << "Medium - складність, де у вас є 10 спроб. Більше підходить для тих, хто вже трохи пограв." << endl;
+            cout << "Hard - максимальна складність. У ній буде всього 5 спроб. На цій скланості важко буде грати навіть досвідченим гравцям." << endl;
             cin >> difficulty;
 
             if (!cin.fail()) {
@@ -63,63 +68,100 @@ public:
         cout << "Вибраний режим: " << mode << endl;
         cout << "Вибрана складність: " << difficulty << endl;
 
-        if(mode==Classic){
+        if (mode == Classic) {
             WordsClassic wordsClassic(account, mode, difficulty, "input.txt");
             wordsClassic.runWordsClassic();
-        }else if(mode==Sentence){
+            endGame();
+        } else if (mode == Sentence) {
             WordsSentence wordsSentence(account, mode, difficulty, "input.txt");
             wordsSentence.runWordsSentence();
-        }else if(mode==Hidden){
+        } else if (mode == Hidden) {
             WordsHidden wordsHidden(account, mode, difficulty, "input.txt");
             wordsHidden.runWordsHidden();
-        }else if(mode==Proverb){
-
-        }else if(mode==Hangman){
+        }
+//        else if (mode == Proverb) {
+//            WordsProverb wordsProverb(account, mode, difficulty, "input.txt");
+//            wordsProverb.runWordsProverb();
+//        }
+        else if (mode == Hangman) {
 
         }
-
-        /*API api;
-        string words = api.apiRequest("Ми граємо в слова українською мовою. Дай мені рандомних 30 іменників через пробіл, без коми, нічого крім цього не пиши. Слова повинні бути не більше за 10 символів. Уникай повторень. Кожне слово повинно починатись з великої літери");
-        ofstream fout("input.txt");
-        fout << words << endl;
-        wordsGame.runGame();
-        string currentWord = wordsGame.getWord();
-        int attempts = wordsGame.getAttempts();
-        string hint = "-";
-        again:
-        int credits = view.getAccountCredits();
-        view.printCurrentAttemptTable(wordsGame.getShuffledWord(), attempts, hint, credits);
-
-        string inputword;
-        cout << "Введи слово, або \"підказка\": ";
-        getline(cin, inputword, ' ');
-        if (inputword == "підказка") {
-            if (credits >= 25) {
-                hint = api.apiRequest("Ми граємо в слова. Зроби підказку українськую мовою до 40 символів до слова " + currentWord);
-                view.setAccountCredits(credits-25);
-            }
-            else {
-                cout << "⚠\uFE0F⚠\uFE0F⚠\uFE0FНа жаль, у вас недостатньо кредитів. Купити їх можна, задонативши на карту 5355571113731129. Після донату пишете в ТГ за номером 0508641813, кидаєте скрін оплати. 100 кредитів = 100грн. Після підтвердження оплати кредити будуть додані на акаунт. Колись.😘😘😘😆😆😆:-):-)^_^(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(╯°□°）╯︵ ┻━┻(╯°□°）╯︵ ┻━┻(╯°□°）╯︵ ┻━┻⚠\uFE0F⚠\uFE0F⚠\uFE0F" << endl;
-            }
-            goto again;
-        }
-        if (inputword == currentWord) {
-            cout << "Ви вгадали!!!!" << endl;
-            if(difficulty == Easy){
-                view.setAccountCredits(credits+5);
-            }else if(difficulty == Medium){
-                view.setAccountCredits(credits+15);
-            }else view.setAccountCredits(credits+25);
-
-        } else {
-            if (attempts == 1) {
-                cout << "Ви програли! Лошара" << endl;
-            }
-            else {
-                cout << "Ви не вгадали. Спробуйте ще раз." << endl;
-                attempts--;
-                goto again;
-            }
-        }*/
     }
+
+    void endGame() {
+        account.getData(account.getName());
+        if (account.getName() != "") {
+            addToLeaderboard("gamesLeaderboard.txt");
+            addToLeaderboard("winsLeaderboard.txt");
+            addToLeaderboard("winsInARowLeaderboard.txt");
+        }
+    }
+
+    void addToLeaderboard(string filename) {
+        ifstream fileIn(filename);
+        if (!fileIn) {
+            cout << "Cannot open input file" << endl;
+            exit(1);
+        }
+
+        vector<string> leaderboard;
+        string line;
+        while (getline(fileIn, line)) {
+            if (line.find(account.getName())) {
+                leaderboard.push_back(line);
+            }
+        }
+        fileIn.close();
+
+        string newPlayer = account.getName() + " " + to_string(account.getGamesCount()) + " " +
+                           to_string(account.getWins()) + " " + to_string(account.getWinsInARow());
+
+        vector<string>::iterator it = leaderboard.end();
+        for (auto iter = leaderboard.begin(); iter != leaderboard.end(); ++iter) {
+            istringstream iss(*iter);
+            string name;
+            int games, wins, winsInARow;
+            iss >> name >> games >> wins >> winsInARow;
+            if (filename == "gamesLeaderboard.txt") {
+                if (account.getGamesCount() >= games) {
+                    it = iter;
+                    break;
+                }
+            } else if (filename == "winsLeaderboard.txt") {
+                if (account.getWins() >= wins) {
+                    it = iter;
+                    break;
+                }
+            } else if (filename == "winsInARowLeaderboard.txt") {
+                if (account.getWinsInARow() >= winsInARow) {
+                    it = iter;
+                    break;
+                }
+            }
+        }
+
+        leaderboard.insert(it, newPlayer);
+
+        if (leaderboard.size() > 10) {
+            leaderboard.resize(10);
+        }
+
+        ofstream fileOut(filename);
+        if (!fileOut) {
+            cout << "Cannot open output file" << endl;
+            exit(1);
+        }
+        int count = 0;
+        for (auto it = leaderboard.begin(); it != leaderboard.end(); ++it) {
+            if (!it->empty()) {
+                if (count < 9) {
+                    fileOut << *it << endl;
+                } else {
+                    fileOut << *it;
+                }
+                count++;
+            }
+        }
+        fileOut.close();
+    };
 };

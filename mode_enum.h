@@ -1,4 +1,4 @@
-enum Mode{
+enum Mode {
     Classic,
     Hidden,
     Proverb,
@@ -6,7 +6,7 @@ enum Mode{
     Hangman
 };
 
-inline istream& operator>>(istream& is, Mode& mode) {
+inline istream &operator>>(istream &is, Mode &mode) {
     string modeStr;
     is >> modeStr;
     if (modeStr == "classic" || modeStr == "Classic") mode = Classic;
@@ -18,14 +18,25 @@ inline istream& operator>>(istream& is, Mode& mode) {
     return is;
 }
 
-inline ostream& operator<<(ostream& os, const Mode& mode) {
+inline ostream &operator<<(ostream &os, const Mode &mode) {
     switch (mode) {
-        case Classic: os << "Classic"; break;
-        case Hidden: os << "Hidden"; break;
-        case Proverb: os << "Proverb"; break;
-        case Sentence: os << "Sentence"; break;
-        case Hangman: os << "Hangman"; break;
-        default: os.setstate(ios::failbit);
+        case Classic:
+            os << "Classic";
+            break;
+        case Hidden:
+            os << "Hidden";
+            break;
+        case Proverb:
+            os << "Proverb";
+            break;
+        case Sentence:
+            os << "Sentence";
+            break;
+        case Hangman:
+            os << "Hangman";
+            break;
+        default:
+            os.setstate(ios::failbit);
     }
     return os;
 }

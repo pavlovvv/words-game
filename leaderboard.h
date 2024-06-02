@@ -15,16 +15,16 @@ public:
             exit(1);
         }
         string line;
-        while (getline(fin, line)) {
-            cout << "├────────────────────────────┼──────────────────┼───────────────┼──────────────────┤" << endl;
-            string name;
+        string name;
+        while (fin >> name) {
             int games, wins, winsInARow;
+            fin >> games >> wins >> winsInARow;
+            cout << "├────────────────────────────┼──────────────────┼───────────────┼──────────────────┤" << endl;
 
-            fin >> name >> games >> wins >> winsInARow;
             cout << "│ " << setw(27) << left << name
-                << "│ " << setw(16) << games
-                << " │ " << setw(13) << wins
-                << " │ " << setw(16) << winsInARow << " │" << endl;
+                 << "│ " << setw(16) << games
+                 << " │ " << setw(13) << wins
+                 << " │ " << setw(16) << winsInARow << " │" << endl;
         }
         cout << "└────────────────────────────┴──────────────────┴───────────────┴──────────────────┘" << endl;
         fin.close();

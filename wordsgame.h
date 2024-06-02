@@ -16,7 +16,8 @@ protected:
     string currentWord;
     string shuffledWord;
 public:
-    WordsGame(Account &a, Mode m, Difficulty d, string fn) : account(a), filename(fn), mode(m), difficulty(d), count(1) {}
+    WordsGame(Account &a, Mode m, Difficulty d, string fn) : account(a), filename(fn), mode(m), difficulty(d),
+                                                             count(1) {}
 
     void addCount() {
         count++;
@@ -39,7 +40,7 @@ public:
         int c = 0;
         while (fin >> word) {
             words.push_back(word);
-            if (c==count) {
+            if (c == count) {
                 currentWord = word;
             }
             c++;
@@ -61,10 +62,5 @@ public:
                 attempts = attempts / 3;
                 break;
         }
-//        switch (mode) {
-//            case Classic:
-//                words.runClassic();
-//                break;
-//        }
     }
 };

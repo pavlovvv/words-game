@@ -17,10 +17,7 @@ public:
         API api;
         again3:
         string currentSentence = api.apiRequest(
-                "Attention! Avoid punctuation. We are playing a word game in Ukrainian. Give me one random sentence of no more than 5 words. ");
-        //cout << currentSentence << endl;
-        /*ofstream fout("input.txt");
-        fout << words << endl;*/
+                "Attention! Avoid punctuation. We are playing a word game in Ukrainian. Give me one random sentence or proverb of no more than 5 words. ");
         currentSentence.pop_back();
         runGame();
         string shuffledSentence = shuffleUTF8Sentence(currentSentence);
@@ -28,19 +25,19 @@ public:
         string hint = "-";
         again:
         int credits = account.getCredits();
-//        cin.clear();
         view.printCurrentAttemptTable(shuffledSentence, attempts, hint, credits);
 
         string inputsentence;
         cout << "Введіть речення, або \"підказка\": ";
-//        cin.clear();
         getline(cin, inputsentence);
 
         if (compareSentences(inputsentence, "підказка")) {
+            string help;
+            cout << "Введіть текст для підказки: ";
+            getline(cin, help);
             if (credits >= 25) {
                 hint = api.apiRequest(
-                        "Ми граємо в слова. Зроби підказку українськую мовою до 35 символів до речення: " +
-                        currentSentence);
+                        "Ми граємо в гру в слоова," + help + " у реченні " + currentSentence);
                 account.setCredits(credits - 25);
             } else {
                 cout
