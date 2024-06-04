@@ -15,7 +15,6 @@
 using namespace std;
 
 class WordsHidden : public WordsGame {
-    API api;
     int count = 2;
 public:
     WordsHidden(Account &a, Difficulty d, string fn);

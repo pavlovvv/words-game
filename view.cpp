@@ -35,6 +35,7 @@ void View::menuInteraction(Account &account) {
         cin >> choice;
         switch (choice) {
             case 1:
+                system("clear");
                 cout << "Ваша статистика: " << endl;
                 printAccountData(account);
                 break;
@@ -44,6 +45,7 @@ void View::menuInteraction(Account &account) {
                     int choice1;
                     cout << "\nОберіть лідерборд: \n1 - За іграми\n2 - За перемогами\n3 - За перемогами підряд\n4 - Повернутися\n";
                     cin >> choice1;
+                    system("clear");
                     switch (choice1) {
                         case 1:
                             leaderboard.printLeaderboard("gamesLeaderboard.txt");

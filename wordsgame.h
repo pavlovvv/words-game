@@ -8,6 +8,7 @@
 #include "account.h"
 #include "view.h"
 #include "difficulty_enum.h"
+#include "API.h"
 
 using namespace std;
 
@@ -21,6 +22,7 @@ protected:
     View view;
     string currentWord;
     string shuffledWord;
+    API api;
 public:
     WordsGame(Account &a, Difficulty d, string fn);
 

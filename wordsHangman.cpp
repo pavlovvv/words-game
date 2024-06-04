@@ -1,8 +1,8 @@
-#include "wordsClassic.h"
+#include "wordsHangman.h"
 
-WordsClassic::WordsClassic(Account &a, Difficulty d, string fn) : WordsGame(a, d, fn) {}
+WordsHangman::WordsHangman(Account &a, Difficulty d, string fn) : WordsGame(a, d, fn) {}
 
-void WordsClassic::runWordsClassic() {
+void WordsHangman::runWordsHangman() {
     int count = 2;
     string words = api.apiRequest(
             "Ми граємо в слова українською мовою. Дай мені рандомних 15 рандомних іменників через пробіл, без коми, нічого крім цього не пиши. Слова повинні бути не більше за 10 символів. Уникай повторень. Кожне слово повинно починатись з великої літери");
@@ -10,20 +10,27 @@ void WordsClassic::runWordsClassic() {
     ofstream fout("input.txt");
     fout << words << endl;
     runGame();
-    shuffledWord = shuffleUTF8Word(currentWord);
     int attempts = getAttempts();
+    vector<string> currentWordChars = splitUTF8String(currentWord);
+    vector<string> guessedWord(currentWordChars.size(), "-");
+    unordered_set<string> guessedLetters;
     string hint = "-";
     again:
     int credits = account.getCredits();
-    view.printCurrentAttemptTable(shuffledWord, attempts, hint, credits);
+    string guessedWordStr;
+    for (const auto &ch : guessedWord) {
+        guessedWordStr += ch;
+    }
+    view.printCurrentAttemptTable(guessedWordStr, attempts, hint, credits);
 
-    string inputword;
-    cout << "Введи слово, або \"підказка\": ";
-    cin >> inputword;
-    if (inputword == "підказка") {
+    string input;
+    cout << "Введи букву, або \"підказка\": ";
+    cin >> input;
+
+    if (input == "підказка") {
         if (credits >= 25) {
             hint = api.apiRequest(
-                    "Ми граємо в слова. Зроби підказку українськую мовою до 35 символів до слова " + currentWord);
+                    "Ми граємо в шибеницю. Зроби підказку українською мовою до 35 символів до слова " + currentWord);
             account.setCredits(credits - 25);
         } else {
             cout
@@ -32,18 +39,47 @@ void WordsClassic::runWordsClassic() {
         }
         goto again;
     }
-    if (inputword == currentWord) {
-        winGame();
-    } else {
-        if (attempts == 1) {
-            cout << "Ви програли! Правильна віддповідь: " << currentWord << endl;
-            account.endGame(false, credits);
-        } else {
-            cout << "Ви не вгадали. Спробуйте ще раз." << endl;
-            attempts--;
-            goto again;
+
+    vector<string> utf8Chars = splitUTF8String(input);
+    if (utf8Chars.size() != 1) {
+        cout << "Будь ласка, введіть тільки одну букву." << endl;
+        goto again;
+    }
+
+    string guess = utf8Chars[0];
+    if (guessedLetters.count(guess)) {
+        cout << "Ви вже вгадували цю букву. Спробуйте ще раз." << endl;
+        goto again;
+    }
+
+    guessedLetters.insert(guess);
+    bool correctGuess = false;
+    for (size_t i = 0; i < currentWordChars.size(); ++i) {
+        if (currentWordChars[i] == guess) {
+            guessedWord[i] = guess;
+            correctGuess = true;
         }
     }
+
+    if (!correctGuess) {
+        attempts--;
+        cout << "Неправильна відповідь! Залишилось спроб: " << attempts << endl;
+    }
+
+    guessedWordStr.clear();
+    for (const auto &ch : guessedWord) {
+        guessedWordStr += ch;
+    }
+
+    if (guessedWordStr == currentWord) {
+        winGame();
+    } else if (attempts == 0) {
+        cout << "Ви програли! Правильна відповідь: " << currentWord << endl;
+        account.endGame(false, credits);
+    } else {
+        goto again;
+    }
+
     count++;
     if (count < 15) {
         string choice;
@@ -56,7 +92,8 @@ void WordsClassic::runWordsClassic() {
     }
 }
 
-vector<string> WordsClassic::splitUTF8String(const string &str) {
+
+vector<string> WordsHangman::splitUTF8String(const string &str) {
     vector<string> utf8Chars;
     for (size_t i = 0; i < str.size();) {
         size_t len = 1;
@@ -73,16 +110,4 @@ vector<string> WordsClassic::splitUTF8String(const string &str) {
         i += len;
     }
     return utf8Chars;
-}
-
-string WordsClassic::shuffleUTF8Word(const string &str) {
-    vector<string> utf8Chars = splitUTF8String(str);
-    random_device rd;
-    mt19937 g(rd());
-    shuffle(utf8Chars.begin(), utf8Chars.end(), g);
-    string shuffledStr;
-    for (const auto &ch: utf8Chars) {
-        shuffledStr += ch;
-    }
-    return shuffledStr;
 }

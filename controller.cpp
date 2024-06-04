@@ -15,6 +15,7 @@ void Controller::startGame() {
         cout << "Classic - класичний варіант гри в \"Слова\"" << endl;
         cout << "Hidden - режим, де частина букв замінені на '*'. Цей режим підходить тим, хто вже трохи пограв у класичний режим" << endl;
         cout << "Sentence - режим для тих, кому гра з одним словом здається нудною. Відгадуйте одразу декілька слів." << endl;
+        cout << "Hangman - стара класична гра, де ви вгадуєте які літери є в слові і вгадуєте саме слово, доки спроби не закінчаться." << endl;
         cin >> mode;
 
         if (!cin.fail()) {
@@ -54,6 +55,10 @@ void Controller::startGame() {
     } else if (mode == Hidden) {
         WordsHidden wordsHidden(account, difficulty, "input.txt");
         wordsHidden.runWordsHidden();
+    }
+    else if (mode == Hangman) {
+        WordsHangman wordsHangman(account, difficulty, "input.txt");
+        wordsHangman.runWordsHangman();
     }
     endGame();
 }

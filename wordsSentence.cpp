@@ -4,7 +4,6 @@ WordsSentence::WordsSentence(Account &a, Difficulty d, string fn) : WordsGame(a,
 
 void WordsSentence::runWordsSentence() {
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    API api;
     again3:
     string currentSentence = api.apiRequest(
             "Attention! Avoid punctuation. We are playing a word game in Ukrainian. Give me one random sentence or proverb of no more than 5 words. ");
@@ -31,7 +30,7 @@ void WordsSentence::runWordsSentence() {
             account.setCredits(credits - 25);
         } else {
             cout
-                    << "⚠\uFE0F⚠\uFE0F⚠\uFE0FНа жаль, у вас недостатньо кредитів. Купити їх можна, задонативши на карту 5355571113731129. Після донату пишете в ТГ за номером 0508641813, кидаєте скрін оплати. 100 кредитів = 100грн. Після підтвердження оплати кредити будуть додані на акаунт. Колись.😘😘😘😆😆😆:-):-)^_^(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(╯°□°）╯︵ ┻━┻(╯°□°）╯︵ ┻━┻(╯°□°）╯︵ ┻━┻⚠\uFE0F⚠\uFE0F⚠\uFE0F"
+                    << "⚠\uFE0F⚠\uFE0F⚠\uFE0FНа жаль, у вас недостатньо кредитів.😘😘😘😆😆😆:-):-)^_^(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(╯°□°）╯︵ ┻━┻(╯°□°）╯︵ ┻━┻(╯°□°）╯︵ ┻━┻⚠\uFE0F⚠\uFE0F⚠\uFE0F"
                     << endl;
         }
         goto again;
@@ -40,7 +39,7 @@ void WordsSentence::runWordsSentence() {
         winGame();
     } else {
         if (attempts == 1) {
-            cout << "Ви програли! Лошара, правильна віддповідь: " << currentSentence << endl;
+            cout << "Ви програли! Правильна віддповідь: " << currentSentence << endl;
             account.endGame(false, credits);
         } else {
             cout << "Ви не вгадали. Спробуйте ще раз." << endl;

@@ -10,6 +10,7 @@
 #include "wordsClassic.h"
 #include "wordsSentence.h"
 #include "wordsHidden.h"
+#include "wordsHangman.h"
 
 using namespace std;
 

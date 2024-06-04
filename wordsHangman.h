@@ -1,5 +1,5 @@
-#ifndef WORDSCLASSIC_H
-#define WORDSCLASSIC_H
+#ifndef WORDSHANGMAN_H
+#define WORDSHANGMAN_H
 
 #include <iostream>
 #include <string>
@@ -9,17 +9,16 @@
 #include <algorithm>
 #include "account.h"
 #include "leaderboard.h"
-#include "api.h"
 #include "wordsGame.h"
+#include "unordered_set"
 
 using namespace std;
 
-class WordsClassic : public WordsGame {
+class WordsHangman : public WordsGame {
 public:
-    WordsClassic(Account &a, Difficulty d, string fn);
-    void runWordsClassic();
+    WordsHangman(Account &a, Difficulty d, string fn);
+    void runWordsHangman();
     vector<string> splitUTF8String(const string &str);
-    string shuffleUTF8Word(const string &str);
 };
 
 #endif
